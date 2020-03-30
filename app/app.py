@@ -2,9 +2,12 @@ from flask import Flask, render_template, url_for, request
 from forms import LoginForm
 from edutatar import login_edu
 import requests
+import os, dotenv
+
+dotenv.load_dotenv()
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'jrny2vyDoFprBzVzLMbLv7guDrOf5a5Q'
+app.config['SECRET_KEY'] = os.environ['SECRET_KEY']
 
 @app.route('/', methods=['GET'])
 def index():
