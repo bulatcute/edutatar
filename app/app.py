@@ -1,9 +1,10 @@
 from flask import Flask, render_template, url_for, request
+from forms import LoginForm
 from edutatar import login_edu
 import requests
 
 app = Flask(__name__)
-
+app.config['SECRET_KEY'] = 'jrny2vyDoFprBzVzLMbLv7guDrOf5a5Q'
 
 @app.route('/', methods=['GET'])
 def index():
@@ -17,19 +18,18 @@ def sw():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == 'POST':
-        login = request.form['login']
-        password = request.form['password']
-        s = requests.session()
-        code = login_edu(s, login, password)
-        if code:
-            pass
-        else:
-            return render_template("auth/login.html", message="Неправильный логин или пароль")
-    else:
-        pass
+    form = LoginForm()
 
-    return render_template('auth/login.html')
+    # login = request.form['login']
+    # password = request.form['password']
+    # s = requests.session()
+    # code = login_edu(s, login, password)
+    # if code:
+    #     pass
+    # else:
+    #     return render_template("auth/login.html", message="Неправильный логин или пароль")
+
+    return render_template('auth/login.html', form=form)
 
 
 if __name__ == '__main__':
