@@ -1,0 +1,21 @@
+{
+  "short_name": "tatfac",
+  "name": "tatfac",
+  "icons": [
+    {
+      "src": "/assets/img/diary.png",
+      "type": "image/png",
+      "sizes": "undefinedxundefined"
+    },
+    {
+      "src": "/assets/img/diary%20(1).png",
+      "type": "image/png",
+      "sizes": "undefinedxundefined"
+    }
+  ],
+  "start_url": "/index.html",
+  "background_color": "rgb(72,72,72)",
+  "theme_color": "rgb(72,72,72)",
+  "display": "standalone",
+  "orientation": "landscape"
+}

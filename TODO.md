@@ -1,4 +1,4 @@
-## отправка комментария учителю
+[-] отправка комментария учителю
 
 > request
 
@@ -46,3 +46,6 @@ Pragma: no-cache
 Set-Cookie: DNSID=3ac0cbde41b01b0dfd1905ae2a31399f98c8e293; path=/; samesite=Lax; domain=.edu.tatar.ru; secure; httponly
 Content-Encoding: gzip
 ```
+
+[-] проверка на вход
+

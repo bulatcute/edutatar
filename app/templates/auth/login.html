@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block body %}
+<form
+  action="{{url_for('login')}}"
+  method="POST"
+  style="background-color: rgba(36,40,42,0.94);width: 90%;max-width: 320px;padding: 40px;filter: blur(0px);">
+
+    <div class="illustration">
+      <i class="icon ion-ios-locked-outline"></i>
+      <h5 style="margin: 0;">Вход через edu.tatar.ru</h5>
+      
+    </div>
+
+    {% if message %}
+      <div style="margin-top: -16px;margin-bottom: 6px"><span style="color: #cf2e2e;font-size: 14px;">{{message}}</span></div>
+    {% endif %}
+
+    <div style="margin-bottom: 16px;">
+      <input class="border-secondary form-control" type="text" name="login"
+        placeholder="Логин" style="background-color: transparent;color: #aeaeae;">
+    </div>
+
+    <div style="margin-bottom: 16px;">
+      <input class="border-secondary form-control" type="password" name="password"
+        placeholder="Пароль" style="background-color: transparent;color: #aeaeae;">
+    </div>
+
+    <div style="margin-bottom: 16px;">
+      <button class="btn btn-primary" type="submit"
+        style="background-color: rgb(120,140,222);margin-top: 26px;border: none;width: 75%;">Войти</button>
+    </div>
+
+</form>
+{% endblock body %}

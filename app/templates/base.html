@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>facultativedesign</title>
+    <meta name="theme-color" content="rgb(72,72,72)">
+    <link rel="icon" type="image/png" sizes="undefinedxundefined" href="{{url_for('static', filename='img/diary.png')}}">
+    <link rel="icon" type="image/png" sizes="undefinedxundefined" href="{{url_for('static', filename='img/diary (1).png')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='bootstrap/css/bootstrap.min.css')}}">
+    <link rel="manifest" href="{{url_for('static', filename='manifest.json')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='fonts/ionicons.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.min.css')}}">
+</head>
+
+<body>
+    <div class="login" style="background-image: url({{url_for('static', filename='img/background.jpg')}});">
+        {% block body %}
+        
+        {% endblock body %}
+    </div>
+    <script src="{{url_for('static', filename='js/jquery.min.js')}}"></script>
+    <script src="{{url_for('static', filename='bootstrap/js/bootstrap.min.js')}}"></script>
+    <script type="text/javascript">
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register("../sw.js").then(function(registration) {
+                    // Registration was successful
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, function(err) {
+                    // registration failed
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+    </script>
+</body>
+
+</html>

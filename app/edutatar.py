@@ -2,14 +2,15 @@ import requests
 from bs4 import BeautifulSoup as bs4
 
 
-def login_with_requests(session, login, password):
+def login_edu(session, login, password):
     payload = {'main_login': login, 'main_password': password}
     url = 'https://edu.tatar.ru/logon'
     headers = {'Referer': url}
-    session.post(url, 
+    session.post(url,
                  data=payload,
                  headers=headers)
-    print('login end')
+    page = session.get('https://edu.tatar.ru')
+    return 'Войти' not in page.text
 
 
 def subjects_list(session):
@@ -38,8 +39,8 @@ def find_facultative(session, pattern, subject_url):
         page = session.get(f'{subject_url}/?page={count}')
 
         if 'Список пуст' in page.text:
-                break
-            
+            break
+
         for ul in bs4(page.text, features="html.parser").find_all('ul', {'class': 'blogs'}):
             for li in ul.find_all('li'):
                 if pattern in li.find('span').text.lower():
@@ -54,11 +55,8 @@ def find_facultative(session, pattern, subject_url):
 
 def home(session):
     page = session.get('https://edu.tatar.ru')
-    soup = bs4(page.text, features='html.parser')
-    print(soup.find('table', {'class': 'tableEx'})
-              .find('tr')
-              .find_all('td')[1]
-              .find('strong').text)
+    return page.status_code
+
 
 def my_facultatives(session):
     url = 'https://edu.tatar.ru/user/subscriptions/facultatives'
@@ -75,16 +73,3 @@ def my_facultatives(session):
         facultatives[a.get('href')] = a.text
 
     return facultatives
-
-
-if __name__ == "__main__":
-    login = '4801010966'
-    password = 'H4Q9'
-
-    s = requests.Session()
-    login_with_requests(s, login, password)
-    for key, value in my_facultatives(s).items():
-        print(value)
-        print(key)
-        print()
-    home(s)
