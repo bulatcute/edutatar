@@ -54,7 +54,7 @@ def find_facultative(session, pattern, subject_url):
 
 def get_home_params(session):
     page = session.get('https://edu.tatar.ru')
-    soup = bs4(page.text)
+    soup = bs4(page.text, features='html.parser')
     name = soup.find('table', {'class': 'tableEx'}).find('tr').find_all('td')[1].find('strong').text
     img = soup.find('div', {'class': 'user-photo'}).find('img')
     if img:

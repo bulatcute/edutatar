@@ -1,11 +1,12 @@
-.login {
+.workspace {
   position: relative;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 50%;
   height: 100vh;
+  background-image: url(/static/img/background.jpg);
 }
-.login form {
+.workspace form {
   display: block;
   text-align: center;
   border-radius: 8px;
@@ -29,6 +30,10 @@ form {
   border-bottom: 2px solid;
   border-radius: 0;
 }
-#message {
-  
+.c-row {
+  display: table;
+  clear: both;
+}
+.c-column {
+  float: left;
 }
