@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect, url_for, request
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from flask_sqlalchemy import SQLAlchemy
 from flask_app.forms import LoginForm
 from flask_app.edutatar import login_edu, get_home_params
@@ -13,6 +13,7 @@ dotenv.load_dotenv()
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = os.environ['SECRET_KEY']
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 # region DATABASE SETUP
 
@@ -43,11 +44,17 @@ def load_user(user_id):
     return User.query.get(user_id)
 
 
+@login_manager.unauthorized_handler
+def unauthorized_callback():
+    return redirect('/login?next=' + request.path)
+
 # endregion
 
 @app.route('/', methods=['GET'])
+@login_required
 def index():
-    return render_template('index.html')
+    data = {'login': current_user.login, 'name': current_user.name, 'avatar': current_user.avatar}
+    return render_template('index.html', data=data)
 
 
 @app.route('/sw.js', methods=['GET'])
