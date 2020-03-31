@@ -1,4 +1,3 @@
-import requests
 from bs4 import BeautifulSoup as bs4
 
 
@@ -53,9 +52,16 @@ def find_facultative(session, pattern, subject_url):
         count += 1
 
 
-def home(session):
+def get_home_params(session):
     page = session.get('https://edu.tatar.ru')
-    return page.status_code
+    soup = bs4(page.text)
+    name = soup.find('table', {'class': 'tableEx'}).find('tr').find_all('td')[1].find('strong').text
+    img = soup.find('div', {'class': 'user-photo'}).find('img')
+    if img:
+        img = 'https://edu.tatar.ru' + img.get('href')
+    else:
+        img = None
+    return {'name': name, 'avatar': img,}
 
 
 def my_facultatives(session):

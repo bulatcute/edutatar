@@ -20,14 +20,14 @@
       {{form.password(class='border-secondary form-control', style='background-color: transparent;color: #aeaeae;')}}
     </div>
 
+    {% if message %}
+      <div><span style="color: #cf2e2e;font-size: 13px;">{{message}}</span></div>
+    {% endif %}
+
     <div style="margin-bottom: 16px;">
       {{form.csrf_token}}
       {{form.submit(class='btn btn-primary', style='background-color: rgb(120,140,222);margin-top: 26px;border: none;width: 75%;')}}
     </div>
-    <!--
-    {% if message %}
-      <div style="margin-top: -16px;margin-bottom: 6px"><span style="color: #cf2e2e;font-size: 14px;">{{message}}</span></div>
-    {% endif %}-->
 
 </form>
 {% endblock body %}
