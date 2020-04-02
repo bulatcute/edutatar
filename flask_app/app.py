@@ -1,8 +1,8 @@
 from flask import Flask, render_template, redirect, url_for, request
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from flask_sqlalchemy import SQLAlchemy
-from flask_app.forms import LoginForm
-from flask_app.edutatar import login_edu, get_home_params, my_stars, check_login
+from forms import LoginForm
+from edutatar import login_edu, get_home_params, my_stars, check_login
 from werkzeug.security import generate_password_hash, check_password_hash
 import requests
 import dotenv
