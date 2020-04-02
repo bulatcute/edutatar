@@ -4,7 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>facultativedesign</title>
+    <title>{% block title %}
+    
+    {% endblock title %}</title>
     <meta name="theme-color" content="rgb(72,72,72)">
     <link rel="icon" type="image/png" sizes="undefinedxundefined" href="{{url_for('static', filename='img/diary.png')}}">
     <link rel="icon" type="image/png" sizes="undefinedxundefined" href="{{url_for('static', filename='img/diary (1).png')}}">

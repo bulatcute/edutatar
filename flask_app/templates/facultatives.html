@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Факультативы
+{% endblock title %}
+
+{% block content %}
+<div style="height: 100vh;padding: 37px;margin-left: 300px;overflow: auto">
+    <h1 style="color: #ffffff;margin-bottom: 18px;">Мои факультативы</h1>
+
+    {% for key, value in facs.items() %}
+    <a href={{key}}>
+    <div class="star-row">
+        <div style="float: left;padding: 14px;"><span style="color: #d6d6d6;font-size: 18px;height: 55px">{{value}}</span></div>
+        <div style="float: right;padding: 10px;"><img class="recycle" src="{{url_for('static', filename='img/recycle-bin-icon.png')}}"></div>
+    </div>
+    </a>
+    {% endfor %}
+</div>
+{% endblock content %}
