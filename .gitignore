@@ -161,7 +161,11 @@ venv/
 
 # Pyre type checker
 
+### PyCharm
+.idea
+
 ### VisualStudioCode ###
+.vscode
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
