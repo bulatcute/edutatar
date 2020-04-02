@@ -79,7 +79,12 @@ def my_facultatives(session):
 
     for li in ul.find_all('li'):
         a = li.find('a')
-        facultatives[a.get('href')] = a.text
+        text = a.text
+        text = text.replace('№', '')
+        text = text.replace(' - ', ' ')
+        text = text.replace('-', ' ')
+        text = ' '.join([i.capitalize() for i in text.split() if i not in ['и', 'по']])
+        facultatives[a.get('href')] = text
 
     return facultatives
 

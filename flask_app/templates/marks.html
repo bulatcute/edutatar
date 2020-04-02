@@ -6,7 +6,9 @@
 
 {% block content %}
 <div style="height: 100vh;padding: 37px;margin-left: 300px;overflow: auto">
-    <span style="font-size: 40px;color: #ffffff;margin-bottom: 18px;font-weight: 500;">Мои оценки</span>
+    <div style="margin-bottom: 18px;">
+        <span style="font-size: 40px;color: #ffffff;font-weight: 500;">Мои оценки</span>
+    </div>
     {% for key, value in stars.items() %}
     <div class="star-row">
         <div style="float: left;padding: 14px;"><span style="color: #d6d6d6;font-size: 18px;height: 55px">{{key}}</span></div>
