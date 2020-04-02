@@ -10,15 +10,15 @@ import os
 
 dotenv.load_dotenv()
 
-app = Flask(__name__)
+application = Flask(__name__)
 
-app.config['SECRET_KEY'] = os.environ['SECRET_KEY']
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+application.config['SECRET_KEY'] = os.environ['SECRET_KEY']
+application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 # region DATABASE SETUP
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-db = SQLAlchemy(app)
+application.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+db = SQLAlchemy(application)
 
 
 class User(UserMixin, db.Model):
@@ -36,7 +36,7 @@ db.create_all()
 # region LOGIN SETUP
 
 login_manager = LoginManager()
-login_manager.init_app(app)
+login_manager.init_app(application)
 
 
 @login_manager.user_loader
@@ -50,18 +50,18 @@ def unauthorized_callback():
 
 # endregion
 
-@app.route('/sw.js', methods=['GET'])
+@application.route('/sw.js', methods=['GET'])
 def sw():
-    return app.send_static_file('sw.js')
+    return application.send_static_file('sw.js')
 
 
-@app.route('/', methods=['GET'])
+@application.route('/', methods=['GET'])
 @login_required
 def index():
     return redirect(url_for('marks'))
 
 
-@app.route('/marks', methods=['GET'])
+@application.route('/marks', methods=['GET'])
 @login_required
 def marks():
     data = {'login': current_user.login, 'name': current_user.name, 'avatar': current_user.avatar}
@@ -71,7 +71,7 @@ def marks():
     return render_template('marks.html', data=data, stars=stars)
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@application.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -102,7 +102,7 @@ def login():
     return render_template('auth/login.html', form=form)
 
 
-@app.route('/logout')
+@application.route('/logout')
 @login_required
 def logout():
     logout_user()
@@ -110,4 +110,4 @@ def logout():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    application.run(debug=True)
