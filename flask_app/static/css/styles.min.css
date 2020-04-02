@@ -37,3 +37,17 @@ form {
 .c-column {
   float: left;
 }
+.star-row {
+  background-color: #202223;
+  border-radius: 4px;
+  padding-left: 15px;
+  padding-right: 15px;
+  height: 55px;
+  margin-bottom: 2px;
+}
+.star-row:hover {
+  background-color: #252729;
+}
+.c-row:hover {
+  background-color: #252729;
+}

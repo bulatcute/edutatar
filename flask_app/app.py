@@ -2,7 +2,7 @@ from flask import Flask, render_template, redirect, url_for, request
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from flask_sqlalchemy import SQLAlchemy
 from flask_app.forms import LoginForm
-from flask_app.edutatar import login_edu, get_home_params
+from flask_app.edutatar import login_edu, get_home_params, my_stars, check_login
 from werkzeug.security import generate_password_hash, check_password_hash
 import requests
 import dotenv
@@ -50,16 +50,25 @@ def unauthorized_callback():
 
 # endregion
 
-@app.route('/', methods=['GET'])
-@login_required
-def index():
-    data = {'login': current_user.login, 'name': current_user.name, 'avatar': current_user.avatar}
-    return render_template('index.html', data=data)
-
-
 @app.route('/sw.js', methods=['GET'])
 def sw():
     return app.send_static_file('sw.js')
+
+
+@app.route('/', methods=['GET'])
+@login_required
+def index():
+    return redirect(url_for('marks'))
+
+
+@app.route('/marks', methods=['GET'])
+@login_required
+def marks():
+    data = {'login': current_user.login, 'name': current_user.name, 'avatar': current_user.avatar}
+    s = requests.session()
+    login_edu(s, data['login'], current_user.password)
+    stars = my_stars(s)
+    return render_template('marks.html', data=data, stars=stars)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -69,17 +78,17 @@ def login():
         login = form.login.data
         password = form.password.data
         s = requests.session()
-        code = login_edu(s, login, password)
+        login_edu(s, login, password)
+        code = check_login(s)
         next = request.args.get('next')
         if code:
             user = User.query.filter_by(login=form.login.data).first()
             if not user:
-                password_hashed = generate_password_hash(form.password.data, method='sha256')
                 user_data = get_home_params(s)
                 if not user_data['avatar']:
                     user_data['avatar'] = url_for('static', filename='img/grayman.png')
                 new_user = User(
-                    login=form.login.data, password=password_hashed, name=user_data['name'], avatar=user_data['avatar']
+                    login=form.login.data, password=password, name=user_data['name'], avatar=user_data['avatar']
                 )
                 db.session.add(new_user)
                 db.session.commit()

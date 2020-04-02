@@ -1,3 +1,4 @@
+import requests
 from bs4 import BeautifulSoup as bs4
 
 
@@ -5,9 +6,10 @@ def login_edu(session, login, password):
     payload = {'main_login': login, 'main_password': password}
     url = 'https://edu.tatar.ru/logon'
     headers = {'Referer': url}
-    session.post(url,
-                 data=payload,
-                 headers=headers)
+    session.post(url, data=payload, headers=headers)
+
+
+def check_login(session):
     page = session.get('https://edu.tatar.ru')
     return 'Войти' not in page.text
 
@@ -79,3 +81,24 @@ def my_facultatives(session):
         facultatives[a.get('href')] = a.text
 
     return facultatives
+
+
+def my_stars(session):
+    payload = {'term': '3'}
+    url = 'https://edu.tatar.ru/user/diary/term'
+    headers = {'Referer': url}
+    page = session.post(url, data=payload, headers=headers)
+    soup = bs4(page.text, features='html.parser')
+    table = soup.find('table', {'class': 'table term-marks'})
+    out = {}
+    for tr in table.find('tbody').find_all('tr')[:-1]:
+        tds = tr.find_all('td')
+        subj = tds[0].text
+        stars = [star.text for star in tds[1: len(tds) - 5] if star.text != '']
+        average = tds[len(tds) - 5].text
+        total = tds[-1].text
+        if total:
+            total = total[-1]
+        
+        out[subj] = {'stars': stars, 'average': average, 'total': total}
+    return out
