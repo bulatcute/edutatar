@@ -57,13 +57,14 @@ def find_facultative(session, pattern, subject_url):
 def get_home_params(session):
     page = session.get('https://edu.tatar.ru')
     soup = bs4(page.text, features='html.parser')
-    name = soup.find('table', {'class': 'tableEx'}).find('tr').find_all('td')[1].find('strong').text
+    name = soup.find('table', {'class': 'tableEx'}).find(
+        'tr').find_all('td')[1].find('strong').text
     img = soup.find('div', {'class': 'user-photo'}).find('img')
     if img:
         img = 'https://edu.tatar.ru' + img.get('href')
     else:
         img = None
-    return {'name': name, 'avatar': img,}
+    return {'name': name, 'avatar': img, }
 
 
 def my_facultatives(session):
@@ -99,6 +100,36 @@ def my_stars(session):
         total = tds[-1].text
         if total:
             total = total[-1]
-        
+
         out[subj] = {'stars': stars, 'average': average, 'total': total}
+    return out
+
+
+def get_diary(session, url='https://edu.tatar.ru/user/diary/week'):
+    r = requests.get(url)
+    day_code = {
+        'mo': 'Понедельник',
+        'tu': 'Вторник',
+        'we': 'Среда',
+        'th': 'Четверг',
+        'fr': 'Пятница',
+        'sa': 'Суббота'
+    }
+    soup = bs4(r.text, features='html.parser')
+    days = soup.find_all('td', {'class': 'tt-days'})
+    subjs = soup.find_all('td', {'class': 'tt-subj'})
+    tasks = soup.find_all('td', {'class': 'tt-mark'})
+    out = {}
+    trs = soup.find_all('tr')
+
+    day = ''
+    for tr in trs:
+        if tr.find('td').get('class') == 'tt-days':
+            daydiv = tr.find('td').find('div')
+            day = day_code[daydiv.get('class')[-2:]] + daydiv.find('span').text
+        subj = tr.find('td', {'class': 'tt-subj'}).find('div').text
+        if subj == '':
+            continue
+        mark = tr.find('td', {'class': 'tt-mark'}).find('div').text
+        out[day][subj] = mark
     return out
