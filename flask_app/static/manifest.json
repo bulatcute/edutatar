@@ -1,21 +1,22 @@
 {
-  "short_name": "tatfac",
-  "name": "tatfac",
+  "short_name": "Образование",
+  "name": "edu tatar client",
+  "lang": "Russian",
   "icons": [
     {
-      "src": "/assets/img/diary.png",
+      "src": "/static/img/diary.png",
       "type": "image/png",
-      "sizes": "undefinedxundefined"
+      "sizes": "192x192"
     },
     {
-      "src": "/assets/img/diary%20(1).png",
+      "src": "/static/img/diary (1).png",
       "type": "image/png",
-      "sizes": "undefinedxundefined"
+      "sizes": "512x512"
     }
   ],
-  "start_url": "/index.html",
-  "background_color": "rgb(72,72,72)",
-  "theme_color": "rgb(72,72,72)",
+  "start_url": "/",
+  "background_color": "#202223",
+  "theme_color": "#202223",
   "display": "standalone",
   "orientation": "landscape"
 }

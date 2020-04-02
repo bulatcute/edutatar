@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request, make_response, send_from_directory
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from flask_sqlalchemy import SQLAlchemy
 from forms import LoginForm
@@ -51,7 +51,10 @@ def unauthorized_callback():
 
 @application.route('/sw.js', methods=['GET'])
 def sw():
-    return application.send_static_file('sw.js')
+    response = make_response(send_from_directory('static', 'sw.js'))
+    response.headers['Cache-Control'] = 'no-cache'
+    response.headers['Content-Type'] = 'application/javascript'
+    return response
 
 
 @application.route('/', methods=['GET'])
