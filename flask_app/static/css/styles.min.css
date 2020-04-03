@@ -38,7 +38,8 @@ form {
   float: left;
 }
 .star-row {
-  background-color: #1e1f20fb;
+  background-color: #1e1f20cc;
+  backdrop-filter: blur(12px);
   border-radius: 4px;
   padding-left: 15px;
   padding-right: 15px;
@@ -62,4 +63,32 @@ form {
   height:35px;
   margin-top: 0;
   margin-bottom: 0;
+}
+.empty-box {
+  background-color: #1e1f20cc;
+  width: 250px;
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  display: block;
+  text-align: center;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.empty-box:before {
+  content: "";
+  display: block;
+  padding-top: 100%;
+}
+.empty-box-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  color: #d6d6d6;
+  padding: 45px;
+  padding-left: 20px;
+  padding-right: 20px;
 }

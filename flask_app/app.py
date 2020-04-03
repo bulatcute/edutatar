@@ -2,7 +2,7 @@ from flask import Flask, render_template, redirect, url_for, request, make_respo
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from flask_sqlalchemy import SQLAlchemy
 from forms import LoginForm
-from edutatar import login_edu, get_home_params, my_stars, check_login, my_facultatives
+from edutatar import login_edu, get_home_params, my_stars, check_login, my_facultatives, get_diary
 import requests
 import dotenv
 import os
@@ -81,6 +81,16 @@ def facultatives():
     login_edu(s, data['login'], current_user.password)
     facs = my_facultatives(s)
     return render_template('facultatives.html', data=data, facs=facs)
+
+
+@application.route('/diary')
+@login_required
+def diary():
+    data = {'login': current_user.login, 'name': current_user.name, 'avatar': current_user.avatar}
+    s = requests.session()
+    login_edu(s, data['login'], current_user.password)
+    diary = get_diary(s)
+    return render_template('diary.html', data=data, diary=diary)
 
 
 @application.route('/login', methods=['GET', 'POST'])

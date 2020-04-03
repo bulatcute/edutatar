@@ -6,17 +6,33 @@
 
 {% block content %}
 <div style="height: 100vh;padding: 37px;margin-left: 300px;overflow: auto">
-    <div style="margin-bottom: 18px;">
+    <div style="margin-bottom: 18px;{% if not diary %}position: absolute;{% endif %}">
         <span style="font-size: 40px;color: #ffffff;font-weight: 500;">Мои оценки</span>
     </div>
+    {% if not stars %}
+    <div class="empty-box">
+        <div class="empty-box-content">
+            <img src="{{url_for('static', filename='img/empty-icon.png')}}" style="width: 100px;height: 100px;">
+            <div style="margin-top: 25px;">
+                <span style="font-size: 14px;">Нет оценок в этой четверти</span>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    {% endif %}
     {% for key, value in stars.items() %}
     <div class="star-row">
-        <div style="float: left;padding: 14px;"><span style="color: #d6d6d6;font-size: 15px;height: 55px">{{key}}</span></div>
+        <div style="float: left;padding-left: 14px;">
+            <div style="line-height: 20px;padding: 6px;">
+                <span style="color: #d6d6d6;font-size: 15px;">{{ key }}</span>
+                <br>
+                <span style="color: darkgray;font-size: 12px;">{% for star in value['stars'] %}
+                {{ star + ' ' }}
+                {% endfor %}</span>
+            </div>
+        </div>
         <div style="float: right;padding: 14px;width: 60px;"><span style="color: #d6d6d6;font-size: 15px;height: 55px">{{ value['total'] }}</span></div>
         <div style="float: right;padding: 14px;width: 65px;"><span style="color: #d6d6d6;font-size: 15px;height: 55px">{{ value['average'] }}</span></div>
-        {% for star in value['stars'] %}
-        <div style="float: right;padding: 14px;width: 30px;"><span style="color: #d6d6d6;font-size: 15px;">{{ star }}</span></div>
-        {% endfor %}
     </div>
     {% endfor %}
 </div>

@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Дневник
+{% endblock title %}
+
+{% block content %}
+
+<div style="height: 100vh;padding: 37px;margin-left: 300px;overflow: auto">
+<div style="margin-bottom: 18px;{% if not diary %}position: absolute;{% endif %}">
+        <span style="font-size: 40px;color: #ffffff;font-weight: 500;">Мой дневник</span>
+
+    </div>
+    {% if not diary %}
+    <div class="empty-box">
+        <div class="empty-box-content">
+            <img src="{{url_for('static', filename='img/empty-icon.png')}}" style="width: 100px;height: 100px;">
+            <div style="margin-top: 25px;">
+                <span style="font-size: 14px;">Нет уроков на этой неделе</span>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    {% endif %}
+</div>
+
+{% endblock content %}

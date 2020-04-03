@@ -83,14 +83,14 @@ def my_facultatives(session):
         text = text.replace('№', '')
         text = text.replace(' - ', ' ')
         text = text.replace('-', ' ')
-        text = ' '.join([i.capitalize() for i in text.split() if i not in ['и', 'по']])
+        text = ' '.join([i.lower() for i in text.split()])
         facultatives[a.get('href')] = text
 
     return facultatives
 
 
 def my_stars(session):
-    payload = {'term': '3'}
+    payload = {'term': '4'}
     url = 'https://edu.tatar.ru/user/diary/term'
     headers = {'Referer': url}
     page = session.post(url, data=payload, headers=headers)
@@ -101,6 +101,8 @@ def my_stars(session):
         tds = tr.find_all('td')
         subj = tds[0].text
         stars = [star.text for star in tds[1: len(tds) - 5] if star.text != '']
+        if not stars:
+            break
         average = tds[len(tds) - 5].text
         total = tds[-1].text
         if total:
