@@ -77,6 +77,7 @@ form {
   border: #788cde;
   border-bottom: 2px solid;
   border-radius: 0;
+  outline: none;
 }
 .c-row {
   display: table;
