@@ -34,7 +34,9 @@
     {% endif %}
     {% for key, value in stars.items() %}
     <div class="star-row">
-        <div style="float: left;padding-left: 14px;">
+        <div style="float: right;padding: 14px;width: 60px;"><span style="color: #d6d6d6;font-size: 15px;height: 55px">{{ value['total'] }}</span></div>
+        <div style="float: right;padding: 14px;width: 65px;"><span style="color: #d6d6d6;font-size: 15px;height: 55px">{{ value['average'] }}</span></div>
+        <div style="padding-left: 14px;">
             <div style="line-height: 20px;padding: 6px;">
                 <span style="color: #d6d6d6;font-size: 15px;">{{ key }}</span>
                 <br>
@@ -43,8 +45,6 @@
                 {% endfor %}</span>
             </div>
         </div>
-        <div style="float: right;padding: 14px;width: 60px;"><span style="color: #d6d6d6;font-size: 15px;height: 55px">{{ value['total'] }}</span></div>
-        <div style="float: right;padding: 14px;width: 65px;"><span style="color: #d6d6d6;font-size: 15px;height: 55px">{{ value['average'] }}</span></div>
     </div>
     {% endfor %}
 </div>
