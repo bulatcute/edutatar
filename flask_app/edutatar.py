@@ -108,6 +108,8 @@ def my_stars(session, term=''):
     for tr in table.find('tbody').find_all('tr')[:-1]:
         tds = tr.find_all('td')
         subj = tds[0].text
+        if 'ОБЖ' in subj:
+            subj = 'ОБЖ'
         stars = [star.text for star in tds[1: len(tds) - 5] if star.text != '']
         if not stars:
             break
