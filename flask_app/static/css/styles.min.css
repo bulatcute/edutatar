@@ -79,6 +79,9 @@ form {
   border-radius: 0;
   outline: none;
 }
+.form-control:focus {
+  box-shadow: none;
+}
 .c-row {
   display: table;
   clear: both;
