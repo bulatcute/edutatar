@@ -1,11 +1,17 @@
-from flask import Flask, render_template, redirect, url_for, request, make_response, send_from_directory
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
-from flask_sqlalchemy import SQLAlchemy
-from forms import LoginForm
-from edutatar import login_edu, get_home_params, my_stars, check_login, my_facultatives, get_diary
-import requests
-import dotenv
 import os
+
+import dotenv
+import requests
+from flask import (Flask, make_response, redirect, render_template, request,
+                   send_from_directory, url_for)
+from flask_login import (
+    LoginManager, UserMixin, current_user, login_required, login_user,
+    logout_user)
+from flask_sqlalchemy import SQLAlchemy
+
+from edutatar import (check_login, get_diary, get_home_params, login_edu,
+                      my_facultatives, my_stars)
+from forms import LoginForm
 
 dotenv.load_dotenv()
 
@@ -49,6 +55,7 @@ def unauthorized_callback():
 
 # endregion
 
+
 @application.route('/sw.js', methods=['GET'])
 def sw():
     response = make_response(send_from_directory('static', 'sw.js'))
@@ -66,7 +73,8 @@ def index():
 @application.route('/marks', methods=['GET'])
 @login_required
 def marks():
-    data = {'login': current_user.login, 'name': current_user.name, 'avatar': current_user.avatar}
+    data = {'login': current_user.login,
+            'name': current_user.name, 'avatar': current_user.avatar}
     s = requests.session()
     login_edu(s, data['login'], current_user.password)
     stars = my_stars(s)
@@ -76,7 +84,8 @@ def marks():
 @application.route('/marks/<int:term>', methods=['GET'])
 @login_required
 def marks_with_term(term):
-    data = {'login': current_user.login, 'name': current_user.name, 'avatar': current_user.avatar}
+    data = {'login': current_user.login,
+            'name': current_user.name, 'avatar': current_user.avatar}
     s = requests.session()
     login_edu(s, data['login'], current_user.password)
     stars = my_stars(s, term=term)
@@ -86,7 +95,8 @@ def marks_with_term(term):
 @application.route('/facultatives', methods=['GET'])
 @login_required
 def facultatives():
-    data = {'login': current_user.login, 'name': current_user.name, 'avatar': current_user.avatar}
+    data = {'login': current_user.login,
+            'name': current_user.name, 'avatar': current_user.avatar}
     s = requests.session()
     login_edu(s, data['login'], current_user.password)
     facs = my_facultatives(s)
@@ -96,7 +106,8 @@ def facultatives():
 @application.route('/diary')
 @login_required
 def diary():
-    data = {'login': current_user.login, 'name': current_user.name, 'avatar': current_user.avatar}
+    data = {'login': current_user.login,
+            'name': current_user.name, 'avatar': current_user.avatar}
     s = requests.session()
     login_edu(s, data['login'], current_user.password)
     diary = get_diary(s)
@@ -118,9 +129,11 @@ def login():
             if not user:
                 user_data = get_home_params(s)
                 if not user_data['avatar']:
-                    user_data['avatar'] = url_for('static', filename='img/grayman.png')
+                    user_data['avatar'] = url_for(
+                        'static', filename='img/grayman.png')
                 new_user = User(
-                    login=form.login.data, password=password, name=user_data['name'], avatar=user_data['avatar']
+                    login=form.login.data, password=password, name=user_data[
+                        'name'], avatar=user_data['avatar']
                 )
                 db.session.add(new_user)
                 db.session.commit()

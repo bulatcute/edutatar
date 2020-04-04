@@ -97,11 +97,12 @@ def my_stars(session, term=''):
         page = session.post(url, data=payload, headers=headers)
     else:
         page = session.get('https://edu.tatar.ru/user/diary/term')
-    
+
     soup = bs4(page.text, features='html.parser')
 
     if not term:
-        term = soup.find('select', {'id': 'term'}).find('option', {'selected': 'selected'}).text[0]
+        term = soup.find('select', {'id': 'term'}).find(
+            'option', {'selected': 'selected'}).text[0]
 
     table = soup.find('table', {'class': 'table term-marks'})
     out = {}
