@@ -155,3 +155,15 @@ form {
   color: #ffffff;
   font-weight: 500;
 }
+@keyframes autofill {
+  to {
+    background-color: transparent;
+    background: transparent;
+    color: #aeaeae;
+  }
+}
+ 
+input:-webkit-autofill {
+  animation-name: autofill;
+  animation-fill-mode: both;
+}
