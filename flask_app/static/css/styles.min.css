@@ -10,10 +10,13 @@
   .content {
     margin-left: 250px;
   }
+  .nav-trigger {
+    display: none;
+  }
 }
 @media screen and (max-width: 750px) {
   .sidebar {
-    visibility: hidden;
+    display: none;
   }
   .content {
     margin-left: 0;

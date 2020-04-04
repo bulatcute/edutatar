@@ -83,7 +83,7 @@ def my_facultatives(session):
         text = text.replace('№', '')
         text = text.replace(' - ', ' ')
         text = text.replace('-', ' ')
-        text = ' '.join([i.lower() for i in text.split()])
+        text = ' '.join([i.lower() for i in text.split() if i.lower() != 'казань'])
         facultatives[a.get('href')] = text.capitalize()
 
     return facultatives
@@ -111,6 +111,10 @@ def my_stars(session, term=''):
         subj = tds[0].text
         if 'ОБЖ' in subj:
             subj = 'ОБЖ'
+        elif 'Музыка' in subj:
+            subj = 'Музыка'
+        elif 'Информатика' in subj:
+            subj = 'Информатика'
         stars = [star.text for star in tds[1: len(tds) - 5] if star.text != '']
         if not stars:
             break

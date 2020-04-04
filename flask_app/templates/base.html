@@ -9,13 +9,13 @@
         {% endblock title %}</title>
     <meta name="theme-color" content="rgb(72,72,72)">
     <link rel="icon" type="image/png" sizes="undefinedxundefined"
-        href="{{url_for('static', filename='img/diary.png')}}">
+        href="{{ url_for('static', filename='img/diary.png' )}}">
     <link rel="icon" type="image/png" sizes="undefinedxundefined"
-        href="{{url_for('static', filename='img/diary (1).png')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename='bootstrap/css/bootstrap.min.css')}}">
-    <link rel="manifest" href="{{url_for('static', filename='manifest.json')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename='fonts/ionicons.min.css')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.min.css')}}">
+        href="{{ url_for('static', filename='img/diary (1).png' )}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css' )}}">
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='fonts/ionicons.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.min.css') }}">
     <link rel="stylesheet"
         href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/11.0.0/css/fabric.min.css" />
 </head>
@@ -26,8 +26,8 @@
 
         {% endblock body %}
     </div>
-    <script src="{{url_for('static', filename='js/jquery.min.js')}}"></script>
-    <script src="{{url_for('static', filename='bootstrap/js/bootstrap.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js')}}"></script>
     <script type="text/javascript">
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function () {
