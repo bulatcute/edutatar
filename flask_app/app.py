@@ -60,7 +60,7 @@ def sw():
 @application.route('/', methods=['GET'])
 @login_required
 def index():
-    return redirect(url_for('marks'))
+    return redirect(url_for('diary'))
 
 
 @application.route('/marks', methods=['GET'])
@@ -70,7 +70,17 @@ def marks():
     s = requests.session()
     login_edu(s, data['login'], current_user.password)
     stars = my_stars(s)
-    return render_template('marks.html', data=data, stars=stars)
+    return render_template('marks.html', data=data, stars=stars[0], term=stars[1])
+
+
+@application.route('/marks/<int:term>', methods=['GET'])
+@login_required
+def marks_with_term(term):
+    data = {'login': current_user.login, 'name': current_user.name, 'avatar': current_user.avatar}
+    s = requests.session()
+    login_edu(s, data['login'], current_user.password)
+    stars = my_stars(s, term=term)
+    return render_template('marks.html', data=data, stars=stars[0], term=str(stars[1]))
 
 
 @application.route('/facultatives', methods=['GET'])

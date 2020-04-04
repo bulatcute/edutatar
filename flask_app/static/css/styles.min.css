@@ -6,6 +6,54 @@
   height: 100vh;
   background-image: url(/static/img/background.jpg);
 }
+@media screen and (min-width: 750px) {
+  .content {
+    margin-left: 250px;
+  }
+}
+@media screen and (max-width: 750px) {
+  .sidebar {
+    visibility: hidden;
+  }
+  .content {
+    margin-left: 0;
+  }
+  .main-title {
+    font-size: 30px;
+  }
+}
+@media screen and (min-width: 1000px) {
+  .content {
+    padding: 35px;
+  }
+  .main-title {
+    font-size: 30px;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .content {
+    padding: 25px;
+  }
+  .main-title {
+    font-size: 30px;
+  }
+}
+.sidebar {
+  float: left;
+  width: 250px;
+  height: 100vh;
+  background-color: #1e1f20dd;
+  backdrop-filter: blur(12px);
+  position: absolute;
+  z-index: 1;
+}
+.content {
+  height: 100vh;
+  overflow: auto;
+}
+a:hover {
+  text-decoration: none;
+}
 .workspace form {
   display: block;
   text-align: center;
@@ -38,13 +86,15 @@ form {
   float: left;
 }
 .star-row {
-  background-color: #1e1f20cc;
+  background-color: #1e1f20ee;
   backdrop-filter: blur(12px);
   border-radius: 4px;
   padding-left: 15px;
   padding-right: 15px;
-  height: 55px;
+  height: auto;
   margin-bottom: 2px;
+  display: flow-root;
+  clear: both;
 }
 .star-row:hover {
   background-color: #252729;
@@ -53,16 +103,16 @@ form {
   background-color: #252729;
 }
 .recycle {
-  width: 30px;
-  height: 30px;
-  margin-top: 2px;
-  margin-bottom: 2px;
+  padding: 11px;
+}
+.recycle i {
+  font-size: 22px;
 }
 .recycle:hover {
-  width: 35px;
-  height:35px;
-  margin-top: 0;
-  margin-bottom: 0;
+  padding: 9px;
+}
+.recycle:hover i {
+  font-size: 24px;
 }
 .empty-box {
   background-color: #1e1f20cc;
@@ -91,4 +141,13 @@ form {
   padding: 45px;
   padding-left: 20px;
   padding-right: 20px;
+}
+@media screen and (max-width: 350px) {
+  .main-title {
+    font-size: 25px;
+  }
+}
+.main-title {
+  color: #ffffff;
+  font-weight: 500;
 }

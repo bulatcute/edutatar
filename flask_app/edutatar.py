@@ -84,17 +84,25 @@ def my_facultatives(session):
         text = text.replace(' - ', ' ')
         text = text.replace('-', ' ')
         text = ' '.join([i.lower() for i in text.split()])
-        facultatives[a.get('href')] = text
+        facultatives[a.get('href')] = text.capitalize()
 
     return facultatives
 
 
-def my_stars(session):
-    payload = {'term': '4'}
-    url = 'https://edu.tatar.ru/user/diary/term'
-    headers = {'Referer': url}
-    page = session.post(url, data=payload, headers=headers)
+def my_stars(session, term=''):
+    if term:
+        payload = {'term': f'{term}'}
+        url = 'https://edu.tatar.ru/user/diary/term'
+        headers = {'Referer': url}
+        page = session.post(url, data=payload, headers=headers)
+    else:
+        page = session.get('https://edu.tatar.ru/user/diary/term')
+    
     soup = bs4(page.text, features='html.parser')
+
+    if not term:
+        term = soup.find('select', {'id': 'term'}).find('option', {'selected': 'selected'}).text[0]
+
     table = soup.find('table', {'class': 'table term-marks'})
     out = {}
     for tr in table.find('tbody').find_all('tr')[:-1]:
@@ -109,7 +117,7 @@ def my_stars(session):
             total = total[-1]
 
         out[subj] = {'stars': stars, 'average': average, 'total': total}
-    return out
+    return [out, term]
 
 
 def get_diary(session, url='https://edu.tatar.ru/user/diary/week'):

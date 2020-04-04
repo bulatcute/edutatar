@@ -5,9 +5,21 @@
 {% endblock title %}
 
 {% block content %}
-<div style="height: 100vh;padding: 37px;margin-left: 300px;overflow: auto">
+<div class="content">
     <div style="margin-bottom: 18px;{% if not diary %}position: absolute;{% endif %}">
-        <span style="font-size: 40px;color: #ffffff;font-weight: 500;">Мои оценки</span>
+        <span class="main-title">{{ term }} четверть</span>
+    </div>
+    <div style="float: right;margin-bottom: 18px">
+        {% if term != '1' %}
+        <a href="/marks/{{ term|int - 1 }}" style="margin-right: 15px;float: left"><i class="main-title ms-Icon ms-Icon--Back"></i></a>
+        {% else %}
+        <div style="margin-right: 15px;float: left"><i class="main-title ms-Icon ms-Icon--Back" style="color: rgb(152,152,152)"></i></div>
+        {% endif %}
+        {% if term != '4' %}
+        <a href="/marks/{{ term|int + 1 }}" style="margin-left: 15px;float: left"><i class="main-title ms-Icon ms-Icon--Forward"></i></a>
+        {% else %}
+        <div style="margin-left: 15px; float: left"><i class="main-title ms-Icon ms-Icon--Forward" style="color: rgb(152,152,152)"></i></div>
+        {% endif %}
     </div>
     {% if not stars %}
     <div class="empty-box">

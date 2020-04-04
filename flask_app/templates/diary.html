@@ -6,10 +6,9 @@
 
 {% block content %}
 
-<div style="height: 100vh;padding: 37px;margin-left: 300px;overflow: auto">
-<div style="margin-bottom: 18px;{% if not diary %}position: absolute;{% endif %}">
-        <span style="font-size: 40px;color: #ffffff;font-weight: 500;">Мой дневник</span>
-
+<div class="content">
+    <div style="margin-bottom: 18px;{% if not diary %}position: absolute;{% endif %}">
+        <span class="main-title">Мой дневник</span>
     </div>
     {% if not diary %}
     <div class="empty-box">

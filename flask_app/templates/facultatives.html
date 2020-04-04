@@ -5,16 +5,28 @@
 {% endblock title %}
 
 {% block content %}
-<div style="height: 100vh;padding: 37px;margin-left: 300px;overflow: auto">
-    <div style="margin-bottom: 18px;">
-        <span style="font-size: 40px;color: #ffffff;font-weight: 500;">Мои факультативы</span>
+<div class="content">
+    <div style="margin-bottom: 18px;{% if not facs %}position: absolute;{% endif %}">
+        <span class="main-title">Мои факультативы</span>
     </div>
+
+    {% if not facs %}
+    <div class="empty-box">
+        <div class="empty-box-content">
+            <img src="{{url_for('static', filename='img/empty-icon.png')}}" style="width: 100px;height: 100px;">
+            <div style="margin-top: 25px;">
+                <span style="font-size: 14px;">Здесь будут отображаться факультативы</span>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    {% endif %}
 
     {% for key, value in facs.items() %}
     <a href={{key}}>
     <div class="star-row">
-        <div style="float: left;padding: 14px;"><span style="color: #d6d6d6;font-size: 15px;height: 55px">{{value}}</span></div>
-        <div style="float: right;padding: 10px;"><img class="recycle" src="{{url_for('static', filename='img/recycle-bin-icon.png')}}"></div>
+        <div class="recycle" style="float: right;"><i class="ms-Icon ms-Icon--Delete" style="color: #c53434;"></i></div>
+        <div style="padding: 14px;"><span style="color: #d6d6d6;font-size: 15px;height: 55px">{{value}}</span></div>
     </div>
     </a>
     {% endfor %}
