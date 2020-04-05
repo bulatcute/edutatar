@@ -9,9 +9,9 @@ from flask_login import (
     logout_user)
 from flask_sqlalchemy import SQLAlchemy
 
-from edutatar import (check_login, get_diary, get_home_params, login_edu,
+from flask_app.edutatar import (check_login, get_diary, get_home_params, login_edu,
             my_facultatives, my_stars)
-from forms import LoginForm
+from flask_app.forms import LoginForm
 
 dotenv.load_dotenv()
 
@@ -152,7 +152,3 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('login'))
-
-
-if __name__ == '__main__':
-    application.run(debug=True)
