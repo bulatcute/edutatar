@@ -10,12 +10,12 @@
   .content {
     margin-left: 250px;
   }
-  .nav-trigger {
+  .nav-trigger-div {
     display: none;
   }
 }
 @media screen and (max-width: 750px) {
-  .sidebar {
+  #sidebar {
     display: none;
   }
   .content {
@@ -41,7 +41,7 @@
     font-size: 30px;
   }
 }
-.sidebar {
+#sidebar {
   float: left;
   width: 250px;
   height: 100vh;

@@ -155,3 +155,6 @@ def get_diary(session, url='https://edu.tatar.ru/user/diary/week'):
         mark = tr.find('td', {'class': 'tt-mark'}).find('div').text
         out[day][subj] = mark
     return out
+
+def facultative_info(session):
+    pass
