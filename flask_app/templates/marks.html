@@ -6,7 +6,7 @@
 
 {% block content %}
 <div class="content">
-    <div style="width: 100%;margin-bottom: 15px" class="nav-trigger">
+    <div style="width: 100%;margin-bottom: 15px;float: left;" class="nav-trigger">
         <a href="#"><i class="ms-Icon ms-Icon--GlobalNavButton" style="color: #d6d6d6;font-size: 30px"></i></a>
     </div>
     <div style="float: right;margin-bottom: 18px">
@@ -21,7 +21,7 @@
         <div style="margin-left: 10px;float: left;border-radius: 12px;background-color: #1e1f20cc;padding: 2px;padding-left: 10px;padding-right: 10px;"><i class="main-title ms-Icon ms-Icon--Forward" style="color: rgb(152,152,152)"></i></div>
         {% endif %}
     </div>
-    <div style="margin-bottom: 18px;{% if not diary %}position: absolute;{% endif %}">
+    <div style="margin-bottom: 18px;{% if not diary %}float: left;{% endif %}">
         <span class="main-title"><i class="ms-Icon ms-Icon--6PointStar" style="font-size: 22px"></i>&nbsp;&nbsp;{{ term }} четверть</span>
     </div>
     {% if not stars %}
