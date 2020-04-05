@@ -3,5 +3,8 @@ $("#nav-trigger").click(function() {
 });
 
 $("#nav-close").click(function() {
-    $("#sidebar").css("display", "none")
+    $("#sidebar").css("display", "none");
+});
+$(".content").click(function() {
+    $("#sidebar").css("display", "none");
 });
