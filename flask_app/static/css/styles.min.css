@@ -153,6 +153,12 @@ form {
   .main-title {
     font-size: 25px;
   }
+  #back-page {
+    margin-right: 5px;
+  }
+  #forward-page {
+    margin-left: 5px;
+  }
 }
 .main-title {
   color: #ffffff;
@@ -165,8 +171,26 @@ form {
     color: #aeaeae;
   }
 }
- 
+
 input:-webkit-autofill {
   animation-name: autofill;
   animation-fill-mode: both;
+}
+#back-page {
+  margin-right: 10px;
+  float: left;
+  border-radius: 12px;
+  background-color: #1e1f20cc;
+  padding: 2px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+#forward-page {
+  margin-left: 10px;
+  float: left;
+  border-radius: 12px;
+  background-color: #1e1f20cc;
+  padding: 2px;
+  padding-left: 10px;
+  padding-right: 10px;
 }

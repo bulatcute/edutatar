@@ -84,7 +84,9 @@ def my_facultatives(session):
         text = text.replace(' - ', ' ')
         text = text.replace('-', ' ')
         text = ' '.join([i.lower() for i in text.split() if i.lower() != 'казань'])
-        facultatives[a.get('href')] = text.capitalize()
+        href = a.get('href')
+        href = href.split('/')[-1]
+        facultatives[href] = text.capitalize()
 
     return facultatives
 
@@ -117,7 +119,7 @@ def my_stars(session, term=''):
             subj = 'Информатика'
         stars = [star.text for star in tds[1: len(tds) - 5] if star.text != '']
         if not stars:
-            break
+            continue
         average = tds[len(tds) - 5].text
         total = tds[-1].text
         if total:
@@ -156,5 +158,15 @@ def get_diary(session, url='https://edu.tatar.ru/user/diary/week'):
         out[day][subj] = mark
     return out
 
-def facultative_info(session):
-    pass
+
+#TODO Parse
+def facultative_info(session, index):
+    subject_list = [
+        'Алгебра'
+    ]
+    url = f'https://edu.tatar.ru/facultative/index/{index}'
+    r = requests.get(url)
+    soup = bs4(r.text, features='html.parser')
+    community_title = soup.find('div', {'class': 'community_title'})
+    name = community_title.find('div').find('p').find('strong')[13:-1]
+    teacher = community_title.find('div').find_all('p')[1].find('strong')[7:]
