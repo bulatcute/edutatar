@@ -194,3 +194,25 @@ input:-webkit-autofill {
   padding-left: 10px;
   padding-right: 10px;
 }
+.day {
+  background-color: #1e1f20ee;
+  backdrop-filter: blur(12px);
+  padding: 35px;
+  border-radius: 4px;
+  margin-bottom: 2px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.subject {
+  margin-bottom: 10px;
+}
+.customr {
+  width: 90%;
+  font-size: 1px;
+  color: rgba(0, 0, 0, 0);
+  line-height: 1px;
+
+  background-color: transparent;
+  margin-top: -4px;
+  margin-bottom: 0px;
+}

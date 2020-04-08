@@ -22,6 +22,30 @@
         </div>
     </div>
     {% else %}
+    {% for key, value in diary.items() %}
+    <div class="day">
+        <div><span style="color: #d6d6d6;font-size: 20px;font-weight: 400;">{{ key }}</span></div>
+        <hr style="height: 0px;border-top: solid 1px #636363;margin: 7px -3px">
+        <div>
+            {% for subject in value %}
+            <div class="subject">
+                <div style="float: right"><span style="color: #d6d6d6;font-size: 17px">{{ subject[2] }}</span></div>
+                <div><span style="color: #d6d6d6;font-size: 15px">{{ subject[0] }}</span></div>
+                <div style="width: 90%">
+                    <span style="color: #a9a9a9;font-size: 12px; line-height: 15px">
+                    {% for i in range(subject[1]|length) %}
+                    {% if i != 0 %}
+                    <div class="custom-br"></div>
+                    {% endif %}
+                    {{ subject[1][i] }}
+                    {% endfor %}
+                    </span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
     {% endif %}
 </div>
 

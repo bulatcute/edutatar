@@ -130,7 +130,7 @@ def my_stars(session, term=''):
 
 
 def get_diary(session, url='https://edu.tatar.ru/user/diary/week'):
-    r = requests.get(url)
+    r = session.get(url)
     day_code = {
         'mo': 'Понедельник',
         'tu': 'Вторник',
@@ -140,33 +140,49 @@ def get_diary(session, url='https://edu.tatar.ru/user/diary/week'):
         'sa': 'Суббота'
     }
     soup = bs4(r.text, features='html.parser')
-    days = soup.find_all('td', {'class': 'tt-days'})
-    subjs = soup.find_all('td', {'class': 'tt-subj'})
-    tasks = soup.find_all('td', {'class': 'tt-mark'})
+    days = soup.find_all('td', {'class': 'tt-days'})[1:]
+    subjs = soup.find_all('td', {'class': 'tt-subj'})[1:]
+    tasks = soup.find_all('td', {'class': 'tt-task'})[1:]
+    marks = soup.find_all('td', {'class': 'tt-mark'})[1:]
     out = {}
     trs = soup.find_all('tr')
 
-    day = ''
-    for tr in trs:
-        if tr.find('td').get('class') == 'tt-days':
-            daydiv = tr.find('td').find('div')
-            day = day_code[daydiv.get('class')[-2:]] + daydiv.find('span').text
-        subj = tr.find('td', {'class': 'tt-subj'}).find('div').text
-        if subj == '':
-            continue
-        mark = tr.find('td', {'class': 'tt-mark'}).find('div').text
-        out[day][subj] = mark
+    for i in range(3):
+        daydiv = days[i].find('div')
+        day = day_code[daydiv.get('class')[0][-2:]] + ' ' + daydiv.find('span').text
+        value = []
+        for j in range(8):
+            subj = subjs[8*i + j].find('div').text
+            if not subj:
+                break
+            value.append((subj, [task for task in tasks[8*i + j].find('div').text.split('\n') if task], marks[8*i + j].find('div').text))
+        out[day] = value
     return out
 
 
 #TODO Parse
 def facultative_info(session, index):
     subject_list = [
-        'Алгебра'
+        'Алгебра',
+        'Геометрия',
+        'ОБЖ',
+        'География',
+        'Обществознание',
+        'История',
+        'Музыка',
+        'Физкультура',
     ]
     url = f'https://edu.tatar.ru/facultative/index/{index}'
-    r = requests.get(url)
+    r = session.get(url)
     soup = bs4(r.text, features='html.parser')
     community_title = soup.find('div', {'class': 'community_title'})
     name = community_title.find('div').find('p').find('strong')[13:-1]
     teacher = community_title.find('div').find_all('p')[1].find('strong')[7:]
+
+
+if __name__ == "__main__":
+    login = '4801010966'
+    pwd = 'H4Q9'
+    s = requests.session()
+    login_edu(s, login, pwd)
+    print(get_diary(s))
