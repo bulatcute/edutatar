@@ -9,6 +9,18 @@
     <div style="width: 100%;margin-bottom: 15px;float: left" class="nav-trigger-div">
         <a href="#" id="nav-trigger"><i class="ms-Icon ms-Icon--GlobalNavButton" style="color: #d6d6d6;font-size: 30px"></i></a>
     </div>
+    <div style="float: right;margin-bottom: 18px">
+        {% if prev_page %}
+        <a id="back-page" href="/diary/{{ prev_page[0] }}"><i class="main-title ms-Icon ms-Icon--Back"></i></a>
+        {% else %}
+        <div id="back-page"><i class="main-title ms-Icon ms-Icon--Back" style="color: rgb(152,152,152)"></i></div>
+        {% endif %}
+        {% if next_page %}
+        <a id="forward-page" href="/diary/{{ next_page[0] }}"><i class="main-title ms-Icon ms-Icon--Forward"></i></a>
+        {% else %}
+        <div id="forward-page"><i class="main-title ms-Icon ms-Icon--Forward" style="color: rgb(152,152,152)"></i></div>
+        {% endif %}
+    </div>
     <div style="margin-bottom: 18px;{% if not diary %}float: left;{% endif %}">
         <span class="main-title"><i class="ms-Icon ms-Icon--BookAnswers" style="font-size: 22px"></i>&nbsp;&nbsp;Мой дневник</span>
     </div>

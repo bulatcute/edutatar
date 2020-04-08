@@ -151,13 +151,15 @@ def get_diary(session, url='https://edu.tatar.ru/user/diary/week'):
         daydiv = days[i].find('div')
         day = day_code[daydiv.get('class')[0][-2:]] + ' ' + daydiv.find('span').text
         value = []
-        for j in range(8):
+        for j in range(6):
             subj = subjs[8*i + j].find('div').text
-            if not subj:
-                break
             value.append((subj, [task for task in tasks[8*i + j].find('div').text.split('\n') if task], marks[8*i + j].find('div').text))
         out[day] = value
-    return out
+    
+    wsc = soup.find('div', {'class': 'week-selector-controls'}).find_all('a')
+    next_page = [ctrl.get('href')[42:] for ctrl in wsc if ctrl.text == 'Следующая →']
+    prev_page = [ctrl.get('href')[42:] for ctrl in wsc if ctrl.text == '← Предыдущая']
+    return [out, next_page, prev_page]
 
 
 #TODO Parse

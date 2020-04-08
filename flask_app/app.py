@@ -111,7 +111,18 @@ def diary():
     s = requests.session()
     login_edu(s, data['login'], current_user.password)
     diary = get_diary(s)
-    return render_template('diary.html', data=data, diary=diary)
+    return render_template('diary.html', data=data, diary=diary[0], next_page=diary[1], prev_page=diary[2])
+
+
+@application.route('/diary/<int:date>')
+@login_required
+def diary_with_date(date):
+    data = {'login': current_user.login,
+            'name': current_user.name, 'avatar': current_user.avatar}
+    s = requests.session()
+    login_edu(s, data['login'], current_user.password)
+    diary = get_diary(s, url=f'https://edu.tatar.ru/user/diary/week?date={date}')
+    return render_template('diary.html', data=data, diary=diary[0], next_page=diary[1], prev_page=diary[2])
 
 
 @application.route('/login', methods=['GET', 'POST'])
