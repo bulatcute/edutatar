@@ -1,0 +1,51 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+{{ info['name'] }}
+{% endblock title %}
+
+{% block content %}
+<div class="content">
+    <div style="width: 100%;margin-bottom: 15px;float: left" class="nav-trigger-div">
+        <a href="#" id="nav-trigger"><i class="ms-Icon ms-Icon--GlobalNavButton"
+                style="color: #d6d6d6;font-size: 30px"></i></a>
+    </div>
+    <div style="margin-bottom: 18px;">
+        <span class="main-title">{{ info['name'] }}</span>
+    </div>
+
+    {% if info['description'] %}
+    <div class="accord-shield">
+        <i class="ms-Icon ms-Icon--ChevronDown" style="color: #d6d6d6;font-size: 14px;vertical-align: bottom;"></i>
+        <span style="color: #d6d6d6;font-size: 16px;">
+            &nbsp;Описание
+        </span>
+    </div>
+    <div class="fac-comment">
+        <div>
+            {% for p in info['description'] %}
+            <span style="color: #a9a9a9;font-size: 14px;">
+                {{ p }}
+            </span>
+            <br>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if info['files'] %}
+    <div class="accord-shield">
+        <i class="ms-Icon ms-Icon--ChevronDown" style="color: #d6d6d6;font-size: 14px;vertical-align: bottom;"></i>
+        <span style="color: #d6d6d6;font-size: 16px;">
+            &nbsp;Файлы
+        </span>
+    </div>
+    {% for url, name in info['files'].items() %}
+    <div class="star-row">
+        <a href="{{ url }}">{{ name }}</a>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+</div>
+{% endblock content %}

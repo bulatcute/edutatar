@@ -7,10 +7,12 @@
 {% block content %}
 <div class="content">
     <div style="width: 100%;margin-bottom: 15px; float: left" class="nav-trigger-div">
-        <a href="#" id="nav-trigger"><i class="ms-Icon ms-Icon--GlobalNavButton" style="color: #d6d6d6;font-size: 30px"></i></a>
+        <a href="#" id="nav-trigger"><i class="ms-Icon ms-Icon--GlobalNavButton"
+                style="color: #d6d6d6;font-size: 30px"></i></a>
     </div>
     <div style="margin-bottom: 18px;{% if not facs %}position: absolute;float: left{% endif %}">
-        <span class="main-title"><i class="ms-Icon ms-Icon--AddWork" style="font-size: 22px"></i>&nbsp;&nbsp;Мои факультативы</span>
+        <span class="main-title"><i class="ms-Icon ms-Icon--AddWork"
+                style="font-size: 22px"></i>&nbsp;&nbsp;Факультативы</span>
     </div>
 
     {% if not facs %}
@@ -26,11 +28,13 @@
     {% endif %}
 
     {% for key, value in facs.items() %}
-    <a href={{key}}>
-    <div class="star-row">
-        <div class="recycle" style="float: right;"><i class="ms-Icon ms-Icon--Delete" style="color: #c53434;"></i></div>
-        <div style="padding: 14px;"><span style="color: #d6d6d6;font-size: 15px;height: 55px">{{value}}</span></div>
-    </div>
+    <a href="/facultative/{{ key }}">
+        <div class="star-row">
+            <div class="recycle" style="float: right;"><i class="ms-Icon ms-Icon--Delete" style="color: #c53434;"></i>
+            </div>
+            <div style="padding: 14px;"><span style="color: #d6d6d6;font-size: 15px;height: 55px">{{ value }}</span>
+            </div>
+        </div>
     </a>
     {% endfor %}
 </div>

@@ -7,7 +7,8 @@
 {% block content %}
 <div class="content">
     <div style="width: 100%;margin-bottom: 15px;float: left;" class="nav-trigger-div">
-        <a href="#" id="nav-trigger"><i class="ms-Icon ms-Icon--GlobalNavButton" style="color: #d6d6d6;font-size: 30px"></i></a>
+        <a href="#" id="nav-trigger"><i class="ms-Icon ms-Icon--GlobalNavButton"
+                style="color: #d6d6d6;font-size: 30px"></i></a>
     </div>
     <div style="float: right;margin-bottom: 18px">
         {% if term != '1' %}
@@ -21,9 +22,17 @@
         <div id="forward-page"><i class="main-title ms-Icon ms-Icon--Forward" style="color: rgb(152,152,152)"></i></div>
         {% endif %}
     </div>
-    <div style="margin-bottom: 18px;{% if not diary %}float: left;{% endif %}">
-        <span class="main-title"><i class="ms-Icon ms-Icon--6PointStar" style="font-size: 22px"></i>&nbsp;&nbsp;{{ term }} четверть</span>
+    {% if stars %}
+    <div style="margin-bottom: 18px;">
+        <span class="main-title"><i class="ms-Icon ms-Icon--6PointStar"
+                style="font-size: 22px"></i>&nbsp;&nbsp;{{ term }} четверть</span>
     </div>
+    {% else %}
+    <div style="margin-bottom: 18px;float: left;">
+        <span class="main-title"><i class="ms-Icon ms-Icon--6PointStar"
+                style="font-size: 22px"></i>&nbsp;&nbsp;{{ term }} четверть</span>
+    </div>
+    {% endif %}
     {% if not stars %}
     <div class="empty-box">
         <div class="empty-box-content">
@@ -37,15 +46,17 @@
     {% endif %}
     {% for key, value in stars.items() %}
     <div class="star-row">
-        <div style="float: right;padding: 14px;width: 60px;"><span style="color: #d6d6d6;font-size: 15px;height: 55px">{{ value['total'] }}</span></div>
-        <div style="float: right;padding: 14px;width: 65px;"><span style="color: #d6d6d6;font-size: 15px;height: 55px">{{ value['average'] }}</span></div>
+        <div style="float: right;padding: 14px;width: 60px;"><span
+                style="color: #d6d6d6;font-size: 15px;height: 55px">{{ value['total'] }}</span></div>
+        <div style="float: right;padding: 14px;width: 65px;"><span
+                style="color: #d6d6d6;font-size: 15px;height: 55px">{{ value['average'] }}</span></div>
         <div style="padding-left: 14px;">
             <div style="line-height: 20px;padding: 6px;">
                 <span style="color: #d6d6d6;font-size: 15px;">{{ key }}</span>
                 <br>
                 <span style="color: darkgray;font-size: 12px;">{% for star in value['stars'] %}
-                {{ star + ' ' }}
-                {% endfor %}</span>
+                    {{ star + ' ' }}
+                    {% endfor %}</span>
             </div>
         </div>
     </div>

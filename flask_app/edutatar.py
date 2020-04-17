@@ -83,7 +83,8 @@ def my_facultatives(session):
         text = text.replace('№', '')
         text = text.replace(' - ', ' ')
         text = text.replace('-', ' ')
-        text = ' '.join([i.lower() for i in text.split() if i.lower() != 'казань'])
+        text = ' '.join([i.lower()
+                         for i in text.split() if i.lower() != 'казань'])
         href = a.get('href')
         href = href.split('/')[-1]
         facultatives[href] = text.capitalize()
@@ -149,42 +150,86 @@ def get_diary(session, url='https://edu.tatar.ru/user/diary/week'):
 
     for i in range(3):
         daydiv = days[i].find('div')
-        day = day_code[daydiv.get('class')[0][-2:]] + ' ' + daydiv.find('span').text
+        day = day_code[daydiv.get('class')[0][-2:]] + \
+            ' ' + daydiv.find('span').text
         value = []
         for j in range(6):
             subj = subjs[8*i + j].find('div').text
-            value.append((subj, [task for task in tasks[8*i + j].find('div').text.split('\n') if task], marks[8*i + j].find('div').text))
+            value.append((subj, [task for task in tasks[8*i + j].find(
+                'div').text.split('\n') if task], marks[8*i + j].find('div').text))
         out[day] = value
-    
+
     wsc = soup.find('div', {'class': 'week-selector-controls'}).find_all('a')
-    next_page = [ctrl.get('href')[42:] for ctrl in wsc if ctrl.text == 'Следующая →']
-    prev_page = [ctrl.get('href')[42:] for ctrl in wsc if ctrl.text == '← Предыдущая']
+    next_page = [ctrl.get('href')[42:]
+                 for ctrl in wsc if ctrl.text == 'Следующая →']
+    prev_page = [ctrl.get('href')[42:]
+                 for ctrl in wsc if ctrl.text == '← Предыдущая']
     return [out, next_page, prev_page]
 
 
-#TODO Parse
 def facultative_info(session, index):
-    subject_list = [
-        'Алгебра',
-        'Геометрия',
-        'ОБЖ',
-        'География',
-        'Обществознание',
-        'История',
-        'Музыка',
-        'Физкультура',
+    to_delete = [
+        'гимназия',
+        'лицей',
+        'школа',
+        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+        '№',
+        'г.',
+        'казань',
+        '-',
+        'классы',
+        'класс'
     ]
     url = f'https://edu.tatar.ru/facultative/index/{index}'
     r = session.get(url)
     soup = bs4(r.text, features='html.parser')
-    community_title = soup.find('div', {'class': 'community_title'})
-    name = community_title.find('div').find('p').find('strong')[13:-1]
-    teacher = community_title.find('div').find_all('p')[1].find('strong')[7:]
+    left = soup.find('div', {'class': 'left'})
+
+    name = left.find('div', {'class': 'community_title'}).find(
+        'div').find('p').find('strong').text[13:-1].lower()
+    for i in to_delete:
+        name = name.replace(i, '')
+    name = ' '.join(name.split()).capitalize()
+
+    teacher_a = soup.find('div', {'class': 'right'}).find('p').find('a')
+    teacher = {f'https://edu.tatar.ru{teacher_a.get("href")}': teacher_a.text}
+
+    description = []
+    for p in left.findChildren(recursive=False)[1:]:
+        if p.name == 'hr' or 'Прикрепленные файлы:' in p.text:
+            break
+        description.append(p.text.strip())
 
 
-if __name__ == "__main__":
-    login = '4801010966'
-    pwd = 'H4Q9'
-    s = requests.session()
-    login_edu(s, login, pwd)
-    print(get_diary(s))
+    try:
+        attached_files = {f'https://edu.tatar.ru{a.get("href")}': a.text for a in left.find(
+            'div', {'class': 'attached_files'}).find('ul').find_all('a')}
+    except:
+        attached_files = None
+
+    com_div = left.find('div', {'class': 'comments'})
+    comments = [mess for mess in com_div.find_all(
+        'div', {'class': 'mess'})] if com_div else None
+
+    if comments:
+        for i in range(len(comments)):
+            mess = comments[i]
+            author = mess.find('div', {'class': 'user'}).find('a').find('strong').text
+            date = mess.find('div', {'class': 'user'}).find('span').text
+            paragraphs = mess.find(
+                'div', {'class': 'mtext'}).find('div').text
+            files_list = [li.find('a') for li in mess.find('div', {'class': 'mtext'}).find(
+                'div', {'class': 'attached_files'}).find('ul').find_all('li')] if mess.find(
+                    'div', {'class': 'mtext'}).find('div', {'class': 'attached_files'}) else None
+            files = {
+                f'https://edu.tatar.ru{a.get("href")}': a.text for a in files_list
+            } if files_list else None
+            comments[i] = {'author': author, 'date': date, 'text': paragraphs, 'files': files}
+
+    return {
+        'name': name,
+        'teacher': teacher,
+        'description': description,
+        'files': attached_files,
+        'comments': comments,
+    }

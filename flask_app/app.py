@@ -1,16 +1,33 @@
 import os
-
 import dotenv
 import requests
-from flask import (Flask, make_response, redirect, render_template, request,
-                   send_from_directory, url_for)
+from flask import (
+    Flask,
+    make_response,
+    redirect,
+    render_template,
+    request,
+    send_from_directory,
+    url_for,
+)
 from flask_login import (
-    LoginManager, UserMixin, current_user, login_required, login_user,
-    logout_user)
+    LoginManager,
+    UserMixin,
+    current_user,
+    login_required,
+    login_user,
+    logout_user,
+)
 from flask_sqlalchemy import SQLAlchemy
-
-from flask_app.edutatar import (check_login, get_diary, get_home_params, login_edu,
-            my_facultatives, my_stars)
+from flask_app.edutatar import (
+    check_login,
+    get_diary,
+    get_home_params,
+    login_edu,
+    my_facultatives,
+    my_stars,
+    facultative_info,
+)
 from flask_app.forms import LoginForm
 
 dotenv.load_dotenv()
@@ -103,6 +120,17 @@ def facultatives():
     return render_template('facultatives.html', data=data, facs=facs)
 
 
+@application.route('/facultative/<int:index>')
+@login_required
+def facultative(index):
+    data = {'login': current_user.login,
+            'name': current_user.name, 'avatar': current_user.avatar}
+    s = requests.session()
+    login_edu(s, data['login'], current_user.password)
+    info = facultative_info(s, index=index)
+    return render_template('facultative.html', data=data, info=info)
+
+
 @application.route('/diary')
 @login_required
 def diary():
@@ -121,7 +149,8 @@ def diary_with_date(date):
             'name': current_user.name, 'avatar': current_user.avatar}
     s = requests.session()
     login_edu(s, data['login'], current_user.password)
-    diary = get_diary(s, url=f'https://edu.tatar.ru/user/diary/week?date={date}')
+    diary = get_diary(
+        s, url=f'https://edu.tatar.ru/user/diary/week?date={date}')
     return render_template('diary.html', data=data, diary=diary[0], next_page=diary[1], prev_page=diary[2])
 
 

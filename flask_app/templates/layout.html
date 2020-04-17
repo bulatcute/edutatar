@@ -3,8 +3,10 @@
 {% block body %}
 <div style="height: 100vh;">
     <div id="sidebar" style="padding-top: 25px">
-        <div style="width: 100%;margin-bottom: 15px;padding-top: 0;padding: 25px;padding-bottom: 0;padding-top: 0;" class="nav-trigger-div">
-            <a href="#" id="nav-close"><i class="ms-Icon ms-Icon--GlobalNavButton" style="color: #d6d6d6;font-size: 30px"></i></a>
+        <div style="width: 100%;margin-bottom: 15px;padding-top: 0;padding: 25px;padding-bottom: 0;padding-top: 0;"
+            class="nav-trigger-div">
+            <a href="#" id="nav-close"><i class="ms-Icon ms-Icon--GlobalNavButton"
+                    style="color: #d6d6d6;font-size: 30px"></i></a>
         </div>
         <div class="c-row"
             style="width: 100%;height: 65px;padding: 5px;padding-right: 18px;padding-left: 11px;border-bottom: 1px solid;border-color: rgb(152, 152, 152);margin-bottom: 15px;">
@@ -12,37 +14,45 @@
                 style="width: 30px;height: 30px;background-color: #fffefe;border-radius: 15px;margin: 5px;margin-right: 10px;">
                 <img style="width: 30px;height: 30px;border-radius: 15px;" src="{{ data['avatar'] }}" /></div>
             <div class="c-column">
-                <span style="color: #d6d6d6;font-size: 14px;display: block;">{{ ' '.join(data['name'].split()[:-1]) }}</span>
-                <span style="display: block;color: rgb(152,152,152);font-size: 14px;font-family: Arial;">{{ data['login'] }}</span>
+                <span
+                    style="color: #d6d6d6;font-size: 14px;display: block;">{{ ' '.join(data['name'].split()[:-1]) }}</span>
+                <span
+                    style="display: block;color: rgb(152,152,152);font-size: 14px;font-family: Arial;">{{ data['login'] }}</span>
             </div>
         </div>
         <a href="{{ url_for('facultatives') }}">
-            <div class="c-row" style="margin-top: 1px;width: 100%;height: 50px;padding-left: 11px;padding-top: 10px;padding-right: 5px;padding-bottom: 10px;">
+            <div class="c-row"
+                style="margin-top: 1px;width: 100%;height: 50px;padding-left: 11px;padding-top: 10px;padding-right: 5px;padding-bottom: 10px;">
                 <div class="c-column" style="width: 30px;height: 30px;margin-left: 13px;">
-                    <i class="ms-Icon ms-Icon--AddWork" style="color: #b86c6c;font-size: 20px;" aria-hidden="true"></i></div>
+                    <i class="ms-Icon ms-Icon--AddWork" style="color: #b86c6c;font-size: 20px;" aria-hidden="true"></i>
+                </div>
                 <div class="c-column" style="padding: 3px;">
                     <span style="color: #d6d6d6;">Мои факультативы</span></div>
             </div>
         </a>
         <a href="{{ url_for('diary') }}">
-            <div class="c-row" style="margin-top: 1px;width: 100%;height: 50px;padding-left: 11px;padding-top: 10px;padding-right: 5px;padding-bottom: 10px;">
+            <div class="c-row"
+                style="margin-top: 1px;width: 100%;height: 50px;padding-left: 11px;padding-top: 10px;padding-right: 5px;padding-bottom: 10px;">
                 <div class="c-column" style="width: 30px;height: 30px;margin-left: 13px;">
-                    <i class="ms-Icon ms-Icon--BookAnswers" style="color: #649655;font-size: 20px;" aria-hidden="true"></i></div>
+                    <i class="ms-Icon ms-Icon--BookAnswers" style="color: #649655;font-size: 20px;"
+                        aria-hidden="true"></i></div>
                 <div class="c-column" style="padding: 3px;">
                     <span style="color: #d6d6d6;">Мой дневник</span></div>
             </div>
         </a>
         <a href="{{ url_for('marks') }}">
-            <div class="c-row" style="margin-top: 1px;width: 100%;height: 50px;padding-left: 11px;padding-top: 10px;padding-right: 5px;padding-bottom: 10px;">
+            <div class="c-row"
+                style="margin-top: 1px;width: 100%;height: 50px;padding-left: 11px;padding-top: 10px;padding-right: 5px;padding-bottom: 10px;">
                 <div class="c-column" style="width: 30px;height: 30px;margin-left: 13px;">
-                    <i class="ms-Icon ms-Icon--6PointStar" style="color: #5d85a0;font-size: 20px" aria-hidden="true"></i></div>
+                    <i class="ms-Icon ms-Icon--6PointStar" style="color: #5d85a0;font-size: 20px"
+                        aria-hidden="true"></i></div>
                 <div class="c-column" style="padding: 3px;">
                     <span style="color: #d6d6d6;">Мои оценки</span></div>
             </div>
         </a>
     </div>
     {% block content %}
-    
+
     {% endblock content %}
 </div>
 
