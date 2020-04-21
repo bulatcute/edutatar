@@ -225,8 +225,6 @@ def facultative_info(session, index):
                 f'https://edu.tatar.ru{a.get("href")}': a.text for a in files_list
             } if files_list else None
             comments[i] = {'author': ' '.join(author.split()[:-1]), 'date': date, 'text': paragraphs, 'files': files}
-    
-    print(comments)
 
     return {
         'name': name,
