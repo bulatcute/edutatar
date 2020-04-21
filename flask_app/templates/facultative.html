@@ -62,7 +62,7 @@
     <div class="fac-comment" style="margin-top: 2px;margin-bottom: 2px;">
         <div style="color: #d6d6d6;float: right;">{{ comment['date'] }}</div>
         <div style="color: #d6d6d6;margin-bottom: 5px;">{{ comment['author'] }}</div>
-        <div style="color: #a9a9a9;">{{ comment['text'] }}</div>
+        <div style="color: #a9a9a9;">{{ comment['text']|urlize(20) }}</div>
     </div>
     {% if comment['files'] %}
     {% for key, value in comment['files'].items() %}
