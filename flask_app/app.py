@@ -84,7 +84,7 @@ def sw():
 @application.route('/', methods=['GET'])
 @login_required
 def index():
-    return redirect(url_for('marks'))
+    return redirect(url_for('diary'))
 
 
 @application.route('/marks', methods=['GET'])

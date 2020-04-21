@@ -198,12 +198,12 @@ def facultative_info(session, index):
     for p in left.findChildren(recursive=False)[1:]:
         if p.name == 'hr' or 'Прикрепленные файлы:' in p.text:
             break
-        description.append(p.text.strip())
-
+        for line in p.text.strip().split('\n'):
+            description.append(line.strip()) if line.strip() else None
 
     try:
         attached_files = {f'https://edu.tatar.ru{a.get("href")}': a.text for a in left.find(
-            'div', {'class': 'attached_files'}).find('ul').find_all('a')}
+            'div', {'class': 'attached_files'}, recursive=False).find('ul').find_all('a')}
     except:
         attached_files = None
 
@@ -224,7 +224,9 @@ def facultative_info(session, index):
             files = {
                 f'https://edu.tatar.ru{a.get("href")}': a.text for a in files_list
             } if files_list else None
-            comments[i] = {'author': author, 'date': date, 'text': paragraphs, 'files': files}
+            comments[i] = {'author': ' '.join(author.split()[:-1]), 'date': date, 'text': paragraphs, 'files': files}
+    
+    print(comments)
 
     return {
         'name': name,
