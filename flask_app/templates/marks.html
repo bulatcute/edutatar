@@ -10,29 +10,36 @@
         <a href="#" id="nav-trigger"><i class="ms-Icon ms-Icon--GlobalNavButton"
                 style="color: #d6d6d6;font-size: 30px"></i></a>
     </div>
-    <div style="float: right;margin-bottom: 18px">
-        {% if term != '1' %}
-        <a id="back-page" href="/marks/{{ term|int - 1 }}"><i class="main-title ms-Icon ms-Icon--Back"></i></a>
+    <div style="max-width: 1000px;">
+        <div style="float: right;margin-bottom: 18px">
+            {% if term != '1' %}
+            <a id="back-page" href="/marks/{{ term|int - 1 }}"><i class="main-title ms-Icon ms-Icon--Back"></i></a>
+            {% else %}
+            <div id="back-page"><i class="main-title ms-Icon ms-Icon--Back" style="color: rgb(152,152,152)"></i></div>
+            {% endif %}
+            {% if term != '4' %}
+            <a id="forward-page" href="/marks/{{ term|int + 1 }}"><i
+                    class="main-title ms-Icon ms-Icon--Forward"></i></a>
+            {% else %}
+            <div id="forward-page"><i class="main-title ms-Icon ms-Icon--Forward" style="color: rgb(152,152,152)"></i>
+            </div>
+            {% endif %}
+        </div>
+
+        {% if stars %}
+        <div style="margin-bottom: 18px;">
+            <span class="main-title"><i class="ms-Icon ms-Icon--6PointStar"
+                    style="font-size: 22px"></i>&nbsp;&nbsp;{{ term }} четверть</span>
+        </div>
         {% else %}
-        <div id="back-page"><i class="main-title ms-Icon ms-Icon--Back" style="color: rgb(152,152,152)"></i></div>
-        {% endif %}
-        {% if term != '4' %}
-        <a id="forward-page" href="/marks/{{ term|int + 1 }}"><i class="main-title ms-Icon ms-Icon--Forward"></i></a>
-        {% else %}
-        <div id="forward-page"><i class="main-title ms-Icon ms-Icon--Forward" style="color: rgb(152,152,152)"></i></div>
+        <div style="margin-bottom: 18px;float: left;">
+            <span class="main-title"><i class="ms-Icon ms-Icon--6PointStar"
+                    style="font-size: 22px"></i>&nbsp;&nbsp;{{ term }} четверть</span>
+        </div>
         {% endif %}
     </div>
-    {% if stars %}
-    <div style="margin-bottom: 18px;">
-        <span class="main-title"><i class="ms-Icon ms-Icon--6PointStar"
-                style="font-size: 22px"></i>&nbsp;&nbsp;{{ term }} четверть</span>
-    </div>
-    {% else %}
-    <div style="margin-bottom: 18px;float: left;">
-        <span class="main-title"><i class="ms-Icon ms-Icon--6PointStar"
-                style="font-size: 22px"></i>&nbsp;&nbsp;{{ term }} четверть</span>
-    </div>
-    {% endif %}
+
+
     {% if not stars %}
     <div class="empty-box">
         <div class="empty-box-content">
@@ -44,6 +51,7 @@
     </div>
     {% else %}
     {% endif %}
+
     {% for key, value in stars.items() %}
     <div class="star-row">
         <div style="float: right;padding: 14px;width: 60px;"><span

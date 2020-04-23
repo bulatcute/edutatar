@@ -40,17 +40,19 @@
             &nbsp;Файлы
         </span>
     </div>
-    <div style="margin-top: 11px;"></div>
+    <div style="margin-top: 15px;"></div>
     {% for url, name in info['files'].items() %}
     <a href="{{ url }}" style="color: #a9a9a9;">
-        <div class="star-row" style="margin-top: 4px;padding-bottom: 5px;padding-top: 5px;">
+        <div class="star-row" style="margin-top: 2px;padding-bottom: 15px;padding-top: 15px;">
             <i class="ms-Icon ms-Icon--TextDocument" style="vertical-align: bottom;"></i>&nbsp;{{ name }}
         </div>
     </a>
     {% endfor %}
+    <div style="margin-top: 15px;"></div>
     {% endif %}
 
     {% if info['comments'] %}
+
     <div class="accord-shield">
         <i class="ms-Icon ms-Icon--ChevronDown" style="color: #d6d6d6;font-size: 14px;vertical-align: bottom;"></i>
         <span style="color: #d6d6d6;font-size: 16px;">
@@ -58,22 +60,27 @@
         </span>
     </div>
     <div style="margin-top: 15px;"></div>
+
     {% for comment in info['comments'] %}
     <div class="fac-comment" style="margin-top: 2px;margin-bottom: 2px;">
         <div style="color: #d6d6d6;float: right;">{{ comment['date'] }}</div>
         <div style="color: #d6d6d6;margin-bottom: 5px;">{{ comment['author'] }}</div>
         <div style="color: #a9a9a9;">{{ comment['text']|urlize(20) }}</div>
     </div>
+
     {% if comment['files'] %}
+
     {% for key, value in comment['files'].items() %}
     <a href="{{ key }}" style="color: #a9a9a9;">
-        <div class="star-row" style="margin-top: 2px;padding-bottom: 5px;padding-top: 5px;">
+        <div class="star-row" style="margin-top: 2px;padding-bottom: 15px;padding-top: 15px;">
             <i class="ms-Icon ms-Icon--TextDocument" style="vertical-align: bottom;"></i>&nbsp;{{ value }}
         </div>
     </a>
     {% endfor %}
+
     {% endif %}
     {% endfor %}
+
     {% endif %}
 </div>
 {% endblock content %}

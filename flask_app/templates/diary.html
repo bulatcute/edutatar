@@ -10,29 +10,35 @@
         <a href="#" id="nav-trigger"><i class="ms-Icon ms-Icon--GlobalNavButton"
                 style="color: #d6d6d6;font-size: 30px"></i></a>
     </div>
-    <div style="float: right;margin-bottom: 18px">
-        {% if prev_page %}
-        <a id="back-page" href="/diary/{{ prev_page[0] }}"><i class="main-title ms-Icon ms-Icon--Back"></i></a>
+    <div style="max-width: 1000px;">
+        <div style="float: right;margin-bottom: 18px">
+            {% if prev_page %}
+            <a id="back-page" href="/diary/{{ prev_page[0] }}"><i class="main-title ms-Icon ms-Icon--Back"></i></a>
+            {% else %}
+            <div id="back-page"><i class="main-title ms-Icon ms-Icon--Back" style="color: rgb(152,152,152)"></i></div>
+            {% endif %}
+            {% if next_page %}
+            <a id="forward-page" href="/diary/{{ next_page[0] }}"><i
+                    class="main-title ms-Icon ms-Icon--Forward"></i></a>
+            {% else %}
+            <div id="forward-page"><i class="main-title ms-Icon ms-Icon--Forward" style="color: rgb(152,152,152)"></i>
+            </div>
+            {% endif %}
+        </div>
+        {% if diary %}
+        <div style="margin-bottom: 18px;">
+            <span class="main-title"><i class="ms-Icon ms-Icon--BookAnswers"
+                    style="font-size: 22px"></i>&nbsp;&nbsp;Дневник</span>
+        </div>
         {% else %}
-        <div id="back-page"><i class="main-title ms-Icon ms-Icon--Back" style="color: rgb(152,152,152)"></i></div>
-        {% endif %}
-        {% if next_page %}
-        <a id="forward-page" href="/diary/{{ next_page[0] }}"><i class="main-title ms-Icon ms-Icon--Forward"></i></a>
-        {% else %}
-        <div id="forward-page"><i class="main-title ms-Icon ms-Icon--Forward" style="color: rgb(152,152,152)"></i></div>
+        <div style="margin-bottom: 18px;float: left;">
+            <span class="main-title"><i class="ms-Icon ms-Icon--BookAnswers"
+                    style="font-size: 22px"></i>&nbsp;&nbsp;Дневник</span>
+        </div>
         {% endif %}
     </div>
-    {% if diary %}
-    <div style="margin-bottom: 18px;">
-        <span class="main-title"><i class="ms-Icon ms-Icon--BookAnswers"
-                style="font-size: 22px"></i>&nbsp;&nbsp;Дневник</span>
-    </div>
-    {% else %}
-    <div style="margin-bottom: 18px;float: left;">
-        <span class="main-title"><i class="ms-Icon ms-Icon--BookAnswers"
-                style="font-size: 22px"></i>&nbsp;&nbsp;Дневник</span>
-    </div>
-    {% endif %}
+
+
     {% if not diary %}
     <div class="empty-box">
         <div class="empty-box-content">
