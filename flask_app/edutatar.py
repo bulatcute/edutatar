@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup as bs4
+import re
 
 
 def login_edu(session, login, password):
@@ -172,7 +173,7 @@ def facultative_info(session, index):
         'гимназия',
         'лицей',
         'школа',
-        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+        r'\d', r'\d.', r' [^и] ',
         '№',
         'г.',
         'казань',
@@ -188,7 +189,7 @@ def facultative_info(session, index):
     name = left.find('div', {'class': 'community_title'}).find(
         'div').find('p').find('strong').text[13:-1].lower()
     for i in to_delete:
-        name = name.replace(i, '')
+        name = re.sub(i, '', name)
     name = ' '.join(name.split()).capitalize()
 
     teacher_a = soup.find('div', {'class': 'right'}).find('p').find('a')
