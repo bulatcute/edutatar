@@ -70,6 +70,14 @@ def load_user(user_id):
 def unauthorized_callback():
     return redirect('/login?next=' + request.path)
 
+
+sessions = {}
+
+for user in User.query.all():
+    s = requests.Session()
+    login_edu(s, user.login, user.password)
+    sessions[user.login] = s
+
 # endregion
 
 
@@ -92,9 +100,7 @@ def index():
 def marks():
     data = {'login': current_user.login,
             'name': current_user.name, 'avatar': current_user.avatar}
-    s = requests.session()
-    login_edu(s, data['login'], current_user.password)
-    stars = my_stars(s)
+    stars = my_stars(sessions[current_user.login])
     return render_template('marks.html', data=data, stars=stars[0], term=stars[1])
 
 
@@ -103,9 +109,7 @@ def marks():
 def marks_with_term(term):
     data = {'login': current_user.login,
             'name': current_user.name, 'avatar': current_user.avatar}
-    s = requests.session()
-    login_edu(s, data['login'], current_user.password)
-    stars = my_stars(s, term=term)
+    stars = my_stars(sessions[current_user.login], term=term)
     return render_template('marks.html', data=data, stars=stars[0], term=str(stars[1]))
 
 
@@ -114,9 +118,7 @@ def marks_with_term(term):
 def facultatives():
     data = {'login': current_user.login,
             'name': current_user.name, 'avatar': current_user.avatar}
-    s = requests.session()
-    login_edu(s, data['login'], current_user.password)
-    facs = my_facultatives(s)
+    facs = my_facultatives(sessions[current_user.login])
     return render_template('facultatives.html', data=data, facs=facs)
 
 
@@ -125,9 +127,7 @@ def facultatives():
 def facultative(index):
     data = {'login': current_user.login,
             'name': current_user.name, 'avatar': current_user.avatar}
-    s = requests.session()
-    login_edu(s, data['login'], current_user.password)
-    info = facultative_info(s, index=index)
+    info = facultative_info(sessions[current_user.login], index=index)
     return render_template('facultative.html', data=data, info=info)
 
 
@@ -136,9 +136,7 @@ def facultative(index):
 def diary():
     data = {'login': current_user.login,
             'name': current_user.name, 'avatar': current_user.avatar}
-    s = requests.session()
-    login_edu(s, data['login'], current_user.password)
-    diary = get_diary(s)
+    diary = get_diary(sessions[current_user.login])
     return render_template('diary.html', data=data, diary=diary[0], next_page=diary[1], prev_page=diary[2])
 
 
@@ -147,10 +145,8 @@ def diary():
 def diary_with_date(date):
     data = {'login': current_user.login,
             'name': current_user.name, 'avatar': current_user.avatar}
-    s = requests.session()
-    login_edu(s, data['login'], current_user.password)
     diary = get_diary(
-        s, url=f'https://edu.tatar.ru/user/diary/week?date={date}')
+        sessions[current_user.login], url=f'https://edu.tatar.ru/user/diary/week?date={date}')
     return render_template('diary.html', data=data, diary=diary[0], next_page=diary[1], prev_page=diary[2])
 
 
@@ -160,7 +156,7 @@ def login():
     if form.validate_on_submit():
         login = form.login.data
         password = form.password.data
-        s = requests.session()
+        s = requests.Session()
         login_edu(s, login, password)
         code = check_login(s)
         next = request.args.get('next')
@@ -178,6 +174,8 @@ def login():
                 db.session.add(new_user)
                 db.session.commit()
                 login_user(new_user, remember=True)
+                login_edu(s, login, password)
+                sessions[new_user.login] = s
             else:
                 login_user(user, remember=True)
             return redirect(next or url_for('index'))
