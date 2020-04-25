@@ -208,4 +208,3 @@ $RECYCLE.BIN/
 .env
 database.db
 passenger_wsgi.py
-__main__.py
