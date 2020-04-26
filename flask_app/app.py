@@ -1,33 +1,20 @@
+import asyncio
+import atexit
 import os
+
 import dotenv
 import requests
-from flask import (
-    Flask,
-    make_response,
-    redirect,
-    render_template,
-    request,
-    send_from_directory,
-    url_for,
-)
+from apscheduler.schedulers.background import BackgroundScheduler
+from flask import (Flask, make_response, redirect, render_template, request,
+                   send_from_directory, url_for)
 from flask_login import (
-    LoginManager,
-    UserMixin,
-    current_user,
-    login_required,
-    login_user,
-    logout_user,
-)
+    LoginManager, UserMixin, current_user, login_required, login_user,
+    logout_user)
 from flask_sqlalchemy import SQLAlchemy
-from flask_app.edutatar import (
-    check_login,
-    get_diary,
-    get_home_params,
-    login_edu,
-    my_facultatives,
-    my_stars,
-    facultative_info,
-)
+
+from flask_app.edutatar import (check_login, facultative_info, get_diary,
+                                get_home_params, login_edu, my_facultatives,
+                                my_stars)
 from flask_app.forms import LoginForm
 
 dotenv.load_dotenv()
@@ -74,9 +61,24 @@ def unauthorized_callback():
 sessions = {}
 
 for user in User.query.all():
-    s = requests.Session()
-    login_edu(s, user.login, user.password)
-    sessions[user.login] = s
+        s = requests.Session()
+        login_edu(s, user.login, user.password)
+        sessions[user.login] = s
+
+
+def reload_sessions():
+    print('sessions reloading')
+    for user in User.query.all():
+        s = requests.Session()
+        login_edu(s, user.login, user.password)
+        sessions[user.login] = s
+
+
+scheduler = BackgroundScheduler()
+scheduler.add_job(func=reload_sessions, trigger='interval', seconds=900)
+scheduler.start()
+
+atexit.register(lambda: scheduler.shutdown())
 
 # endregion
 
